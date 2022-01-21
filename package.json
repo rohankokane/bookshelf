@@ -85,11 +85,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "node ./scripts/pre-push"
-    }
-  },
   "browserslist": {
     "development": [
       "last 2 chrome versions",
