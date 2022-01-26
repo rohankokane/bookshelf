@@ -11,7 +11,7 @@ function sendProfileQueue() {
   }
   const queueToSend = [...queue]
   queue = []
-  return client('profile', {data: queueToSend})
+  return client('report/profile', {data: queueToSend})
 }
 
 function Profiler({metadata, phases, ...props}) {

@@ -51,7 +51,7 @@ function useUpdateListItem(options) {
   return useMutation(
     updates =>
       client(`list-items/${updates.id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         data: updates,
       }),
     {

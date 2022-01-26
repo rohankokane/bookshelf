@@ -48,13 +48,13 @@ const handlers = [
     return res(ctx.json({user}))
   }),
 
-  rest.get(`${apiUrl}/me`, async (req, res, ctx) => {
+  rest.get(`${apiUrl}/user/me`, async (req, res, ctx) => {
     const user = await getUser(req)
     const token = getToken(req)
     return res(ctx.json({user: {...user, token}}))
   }),
 
-  rest.get(`${apiUrl}/bootstrap`, async (req, res, ctx) => {
+  rest.get(`${apiUrl}/user/bootstrap`, async (req, res, ctx) => {
     const user = await getUser(req)
     const token = getToken(req)
     const lis = await listItemsDB.readByOwner(user.id)
@@ -144,7 +144,7 @@ const handlers = [
     return res(ctx.json({success: true}))
   }),
 
-  rest.post(`${apiUrl}/profile`, async (req, res, ctx) => {
+  rest.post(`${apiUrl}/report/profile`, async (req, res, ctx) => {
     // here's where we'd actually send the report to a real data store.
     return res(ctx.json({success: true}))
   }),

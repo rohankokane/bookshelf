@@ -14,7 +14,7 @@ async function bootstrapAppData() {
 
   const token = await auth.getToken()
   if (token) {
-    const data = await client('bootstrap', {token})
+    const data = await client('user/bootstrap', {token})
     queryCache.setQueryData('list-items', data.listItems, {
       staleTime: 5000,
     })
@@ -46,7 +46,7 @@ function AuthProvider(props) {
     const appDataPromise = bootstrapAppData()
     run(appDataPromise)
   }, [run])
-
+  //onSubmit({username, password}) -> auth.login({}) -> client('login').then -> setItem(token)
   const login = React.useCallback(
     form => auth.login(form).then(user => setData(user)),
     [setData],
