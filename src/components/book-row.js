@@ -41,6 +41,9 @@ function BookRow({book}) {
             boxShadow: '0 5px 15px -5px rgba(0,0,0,.08)',
             color: 'inherit',
           },
+          [mq.small]: {
+            gridTemplateColumns: '1fr',
+          },
         }}
       >
         <div
@@ -48,6 +51,7 @@ function BookRow({book}) {
             width: 140,
             [mq.small]: {
               width: 100,
+              margin: '0 auto',
             },
           }}
         >
@@ -58,7 +62,15 @@ function BookRow({book}) {
           />
         </div>
         <div css={{flex: 1}}>
-          <div css={{display: 'flex', justifyContent: 'space-between'}}>
+          <div
+            css={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              [mq.small]: {
+                flexDirection: 'column',
+              },
+            }}
+          >
             <div css={{flex: 1}}>
               <h2
                 id={id}
@@ -72,16 +84,39 @@ function BookRow({book}) {
               </h2>
               {listItem?.finishDate ? <Rating listItem={listItem} /> : null}
             </div>
-            <div css={{marginLeft: 10}}>
+            <div
+              css={{
+                marginLeft: 10,
+                [mq.small]: {
+                  marginLeft: '0',
+                  marginBottom: '0.5rem',
+                },
+              }}
+            >
               <div
                 css={{
                   marginTop: '0.4em',
                   fontStyle: 'italic',
                   fontSize: '0.85em',
+                  [mq.small]: {
+                    display: 'inline-block',
+                  },
                 }}
               >
                 {author}
               </div>
+              <span
+                css={{
+                  display: 'none',
+                  [mq.small]: {
+                    display: 'inline-block',
+                    padding: '0 0.3rem',
+                  },
+                }}
+              >
+                {' '}
+                ⋅{' '}
+              </span>
               <small>{book.publisher}</small>
             </div>
           </div>
@@ -100,6 +135,7 @@ function BookRow({book}) {
           flexDirection: 'column',
           justifyContent: 'space-around',
           height: '100%',
+          maxHeight: '300px',
         }}
       >
         <StatusButtons book={book} />
