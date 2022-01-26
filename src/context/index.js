@@ -2,6 +2,7 @@ import * as React from 'react'
 import {BrowserRouter as Router} from 'react-router-dom'
 import {ReactQueryConfigProvider} from 'react-query'
 import {AuthProvider} from './auth-context'
+import ScrollToTop from 'components/ScrollToTop'
 
 const queryConfig = {
   queries: {
@@ -19,6 +20,7 @@ function AppProviders({children}) {
   return (
     <ReactQueryConfigProvider config={queryConfig}>
       <Router>
+        <ScrollToTop />
         <AuthProvider>{children}</AuthProvider>
       </Router>
     </ReactQueryConfigProvider>
