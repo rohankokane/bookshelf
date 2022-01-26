@@ -205,7 +205,7 @@ describe('console errors', () => {
 
     const testErrorMessage = '__test_error_message__'
     server.use(
-      rest.put(`${apiURL}/list-items/:listItemId`, async (req, res, ctx) => {
+      rest.patch(`${apiURL}/list-items/:listItemId`, async (req, res, ctx) => {
         return res(
           ctx.status(400),
           ctx.json({status: 400, message: testErrorMessage}),

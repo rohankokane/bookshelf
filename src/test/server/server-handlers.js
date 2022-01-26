@@ -126,7 +126,7 @@ const handlers = [
     return res(ctx.json({listItem: {...listItem, book}}))
   }),
 
-  rest.put(`${apiUrl}/list-items/:listItemId`, async (req, res, ctx) => {
+  rest.patch(`${apiUrl}/list-items/:listItemId`, async (req, res, ctx) => {
     const user = await getUser(req)
     const {listItemId} = req.params
     const updates = req.body
