@@ -77,10 +77,6 @@ function AuthenticatedApp() {
         >
           Bookshelf
         </h3>
-        {/* {user.username}
-        <Button variant="secondary" css={{marginLeft: '10px'}} onClick={logout}>
-          Logout
-        </Button> */}
       </div>
       <div
         css={{
@@ -100,22 +96,16 @@ function AuthenticatedApp() {
       >
         <Burger open={open} setOpen={setOpen} />
         <StyledMenu open={open}>
-          <>
-            <Nav
-              onClick={() => {
-                setOpen(o => !o)
-              }}
-              username={user.username}
-            >
-              <Button
-                variant="secondary"
-                css={{width: '100%'}}
-                onClick={logout}
-              >
-                Logout
-              </Button>
-            </Nav>
-          </>
+          <Nav
+            onClick={() => {
+              setOpen(o => !o)
+            }}
+            username={user.username}
+          >
+            <Button variant="secondary" css={{width: '100%'}} onClick={logout}>
+              Logout
+            </Button>
+          </Nav>
         </StyledMenu>
         <main css={{width: '100%'}}>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
