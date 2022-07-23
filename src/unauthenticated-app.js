@@ -7,6 +7,7 @@ import {Modal, ModalContents, ModalOpenButton} from './components/modal'
 import {Logo} from './components/logo'
 import {useAuth} from './context/auth-context'
 import {useAsync} from './utils/hooks'
+import {text} from 'styles/colors'
 
 function LoginForm({onSubmit, submitButton}) {
   const {isLoading, isError, error, run} = useAsync()
@@ -61,6 +62,19 @@ function LoginForm({onSubmit, submitButton}) {
 
 function UnauthenticatedApp() {
   const {login, register} = useAuth()
+  const {isLoading, isError, error, run} = useAsync()
+
+  function handleGuestlogin(event) {
+    event.preventDefault()
+
+    run(
+      login({
+        username: 'Guest',
+        password: '123456',
+      }),
+    )
+  }
+
   return (
     <div
       css={{
@@ -76,9 +90,11 @@ function UnauthenticatedApp() {
       <h1>Bookshelf</h1>
       <div
         css={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-          gridGap: '0.75rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.8rem',
+          width: '100%',
+          maxWidth: '320px',
         }}
       >
         <Modal>
@@ -92,14 +108,23 @@ function UnauthenticatedApp() {
             />
           </ModalContents>
         </Modal>
+        <Button variant="secondary" onClick={handleGuestlogin}>
+          Guest Login
+          {isLoading ? <Spinner css={{marginLeft: 5}} /> : null}
+        </Button>
+        {isError ? <ErrorMessage error={error} /> : null}
+        <br />
+        <p css={{textAlign: 'center', color: text, margin: '0'}}>
+          Not Registered yet?
+        </p>
         <Modal>
           <ModalOpenButton>
-            <Button variant="secondary">Register</Button>
+            <Button variant="link">Sign up now</Button>
           </ModalOpenButton>
-          <ModalContents aria-label="Registration form" title="Register">
+          <ModalContents aria-label="Sign up form" title="Sign up">
             <LoginForm
               onSubmit={register}
-              submitButton={<Button variant="secondary">Register</Button>}
+              submitButton={<Button variant="secondary">Sign up</Button>}
             />
           </ModalContents>
         </Modal>

@@ -1,9 +1,15 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-
+import * as React from 'react'
 import {Routes, Route, Link as RouterLink, useMatch} from 'react-router-dom'
 import {ErrorBoundary} from 'react-error-boundary'
-import {Button, ErrorMessage, FullPageErrorFallback} from './components/lib'
+import {
+  Button,
+  ErrorMessage,
+  FullPageErrorFallback,
+  StyledBurger,
+  StyledMenu,
+} from './components/lib'
 import * as mq from './styles/media-queries'
 import * as colors from './styles/colors'
 import {useAuth} from './context/auth-context'
@@ -12,6 +18,8 @@ import {FinishedScreen} from './screens/finished'
 import {DiscoverBooksScreen} from './screens/discover'
 import {BookScreen} from './screens/book'
 import {NotFoundScreen} from './screens/not-found'
+import {useState} from 'react'
+import {Logo} from 'components/logo'
 
 function ErrorFallback({error}) {
   return (
@@ -28,28 +36,57 @@ function ErrorFallback({error}) {
   )
 }
 
+const Burger = ({open, setOpen}) => {
+  return (
+    <StyledBurger open={open} onClick={() => setOpen(!open)}>
+      <div />
+      <div />
+      <div />
+    </StyledBurger>
+  )
+}
+
 function AuthenticatedApp() {
   const {user, logout} = useAuth()
+  const [open, setOpen] = useState(false)
   return (
     <ErrorBoundary FallbackComponent={FullPageErrorFallback}>
       <div
         css={{
+          position: 'fixed',
+          height: '4rem',
           display: 'flex',
           alignItems: 'center',
-          position: 'absolute',
-          top: '10px',
-          right: '10px',
+          justifyContent: 'center',
+          top: '0px',
+          left: '0px',
+          right: '0px',
+          padding: '0.5rem 2rem',
+          background: colors.indigoDarken10,
+          zIndex: 1,
+          boxShadow: 'rgb(0 0 0 / 20%) 0px 1px 6px 2px',
         }}
       >
-        {user.username}
+        <Logo />
+        <h3
+          css={{
+            fontSize: '1.5rem',
+            color: colors.gray10,
+            fontWeight: '500',
+            margin: '0 0 0 0.5rem',
+          }}
+        >
+          Bookshelf
+        </h3>
+        {/* {user.username}
         <Button variant="secondary" css={{marginLeft: '10px'}} onClick={logout}>
           Logout
-        </Button>
+        </Button> */}
       </div>
       <div
         css={{
           margin: '0 auto',
-          padding: '4em 2em',
+          padding: '5.5em 2em',
           maxWidth: '840px',
           width: '100%',
           display: 'grid',
@@ -62,9 +99,25 @@ function AuthenticatedApp() {
           },
         }}
       >
-        <div css={{position: 'relative'}}>
-          <Nav />
-        </div>
+        <Burger open={open} setOpen={setOpen} />
+        <StyledMenu open={open}>
+          <>
+            <Nav
+              onClick={() => {
+                setOpen(o => !o)
+              }}
+              username={user.username}
+            >
+              <Button
+                variant="secondary"
+                css={{width: '100%'}}
+                onClick={logout}
+              >
+                Logout
+              </Button>
+            </Nav>
+          </>
+        </StyledMenu>
         <main css={{width: '100%'}}>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <AppRoutes />
@@ -110,12 +163,12 @@ function NavLink(props) {
   )
 }
 
-function Nav(params) {
+function Nav({onClick, username, children}) {
   return (
     <nav
       css={{
         position: 'sticky',
-        top: '4px',
+        top: '5.5rem',
         padding: '1em 1.5em',
         border: `1px solid ${colors.gray10}`,
         borderRadius: '3px',
@@ -124,7 +177,11 @@ function Nav(params) {
           top: 'auto',
         },
       }}
+      onClick={onClick}
     >
+      <p css={{fontSize: '1.25rem', fontWeight: '500'}}>
+        Hello, <span>{username}</span>
+      </p>
       <ul
         css={{
           listStyle: 'none',
@@ -141,6 +198,7 @@ function Nav(params) {
           <NavLink to="/discover">Discover</NavLink>
         </li>
       </ul>
+      {children}
     </nav>
   )
 }
