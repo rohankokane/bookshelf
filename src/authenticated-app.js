@@ -71,7 +71,7 @@ function AuthenticatedApp() {
           css={{
             fontSize: '1.5rem',
             color: colors.gray10,
-            fontWeight: '500',
+            fontWeight: '600',
             margin: '0 0 0 0.5rem',
           }}
         >
