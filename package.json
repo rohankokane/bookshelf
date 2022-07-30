@@ -3,12 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "author": "Rohan",
-  "license": "GPL-3.0-only",
   "homepage": "https://bookshelf.netlify.app/",
-  "engines": {
-    "node": "12 || 14 || 15 || 16",
-    "npm": ">=6"
-  },
   "dependencies": {
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
