@@ -176,7 +176,6 @@ const StyledMenu = styled.nav`
     flex-direction: column;
     justify-content: flex-start;
     background: ${colors.base};
-    box-shadow: rgb(0 0 0 / 20%) 2px 0px 10px 2px;
     z-index: 2;
     transition: transform 0.3s ease-in-out;
     transform: ${({open}) => (open ? 'translateX(0)' : 'translateX(-100%)')};
@@ -189,49 +188,70 @@ const StyledMenu = styled.nav`
     width: 100%;
   }
 `
-const StyledBurger = styled.button`
+
+const NavButton = styled.button`
   @media (min-width: 991px) {
     display: none;
   }
   position: fixed;
   top: 18px;
-  left: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  left: 1.2rem;
   width: 2rem;
   height: 2rem;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10;
+  z-index: 100;
 
   &:focus {
     outline: none;
   }
+`
 
-  div {
-    width: 2rem;
-    height: 0.2rem;
-    background: ${({open}) => (open ? colors.text : colors.base)};
+const StyledBurger = styled(NavButton)`
+  display: flex;
+  left: unset;
+  right: 1.2rem;
+  .ham-svg {
+    width: 100%;
+    height: 100%;
+  }
+  .line {
+    fill: none;
+    stroke: #000;
+    stroke-width: 6;
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
 
-    border-radius: 10px;
-    transition: all 0.3s linear;
-    position: relative;
-    transform-origin: 1px;
-
-    :first-child {
-      transform: ${({open}) => (open ? 'rotate(45deg)' : 'rotate(0)')};
+    &1 {
+      stroke-dasharray: 60 207;
+      stroke-width: 6;
     }
-
-    :nth-child(2) {
-      opacity: ${({open}) => (open ? '0' : '1')};
-      transform: ${({open}) => (open ? 'translateX(20px)' : 'translateX(0)')};
+    &2 {
+      stroke-dasharray: 60 60;
+      stroke-width: 6;
     }
-
-    :nth-child(3) {
-      transform: ${({open}) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
+    &3 {
+      stroke-dasharray: 60 207;
+      stroke-width: 6;
+    }
+  }
+  &.open .line {
+    &1 {
+      stroke-dasharray: 90 207;
+      stroke-dashoffset: -134;
+      stroke-width: 6;
+    }
+    &2 {
+      stroke-dasharray: 1 60;
+      stroke-dashoffset: -30;
+      stroke-width: 6;
+    }
+    &3 {
+      stroke-dasharray: 90 207;
+      stroke-dashoffset: -134;
+      stroke-width: 6;
     }
   }
 `
@@ -251,4 +271,5 @@ export {
   Link,
   StyledMenu,
   StyledBurger,
+  NavButton,
 }

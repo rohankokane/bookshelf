@@ -1,11 +1,19 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {Routes, Route, Link as RouterLink, useMatch} from 'react-router-dom'
+import {
+  Routes,
+  Route,
+  Link as RouterLink,
+  useMatch,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom'
 import {ErrorBoundary} from 'react-error-boundary'
 import {
   Button,
   ErrorMessage,
   FullPageErrorFallback,
+  NavButton,
   StyledBurger,
   StyledMenu,
 } from './components/lib'
@@ -19,6 +27,7 @@ import {BookScreen} from './screens/book'
 import {NotFoundScreen} from './screens/not-found'
 import {useState} from 'react'
 import {Logo} from 'components/logo'
+import {MdArrowBackIos} from 'react-icons/md'
 
 function ErrorFallback({error}) {
   return (
@@ -37,17 +46,42 @@ function ErrorFallback({error}) {
 
 const Burger = ({open, setOpen}) => {
   return (
-    <StyledBurger open={open} onClick={() => setOpen(!open)}>
-      <div />
-      <div />
-      <div />
+    <StyledBurger
+      className={open ? ' open ' : ''}
+      open={open}
+      onClick={() => setOpen(!open)}
+    >
+      <svg width="100" height="100" class="ham-svg" viewBox="0 0 100 100">
+        <path
+          class="line line1"
+          d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"
+        ></path>
+        <path class="line line2" d="M 20,50 H 80"></path>
+        <path
+          class="line line3"
+          d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"
+        ></path>
+      </svg>
     </StyledBurger>
   )
+}
+const BackButton = () => {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  if (location.pathname.includes('book')) {
+    return (
+      <NavButton onClick={() => navigate(-1)}>
+        <MdArrowBackIos size={'22'} />
+      </NavButton>
+    )
+  } else return null
 }
 
 function AuthenticatedApp() {
   const {user, logout} = useAuth()
   const [open, setOpen] = useState(false)
+
   return (
     <ErrorBoundary FallbackComponent={FullPageErrorFallback}>
       <div
@@ -61,22 +95,12 @@ function AuthenticatedApp() {
           left: '0px',
           right: '0px',
           padding: '0.5rem 2rem',
-          background: colors.indigoDarken10,
+          background: colors.gray10,
           zIndex: 1,
-          boxShadow: 'rgb(0 0 0 / 20%) 0px 1px 6px 2px',
+          boxShadow: 'rgb(0 0 0 / 15%) 0px 0px 5px 1px',
         }}
       >
         <Logo />
-        <h3
-          css={{
-            fontSize: '1.5rem',
-            color: colors.gray10,
-            fontWeight: '600',
-            margin: '0 0 0 0.5rem',
-          }}
-        >
-          Bookshelf
-        </h3>
       </div>
       <div
         css={{
@@ -94,6 +118,7 @@ function AuthenticatedApp() {
           },
         }}
       >
+        <BackButton />
         <Burger open={open} setOpen={setOpen} />
         <StyledMenu open={open}>
           <Nav
