@@ -101,6 +101,19 @@ function AuthenticatedApp() {
         }}
       >
         <Logo />
+        <h3
+          css={{
+            [mq.small]: {
+              display: 'none',
+            },
+            fontSize: '1.5rem',
+            color: colors.text,
+            fontWeight: '600',
+            margin: '0 0 0 0.5rem',
+          }}
+        >
+          Bookshelf
+        </h3>
       </div>
       <div
         css={{
